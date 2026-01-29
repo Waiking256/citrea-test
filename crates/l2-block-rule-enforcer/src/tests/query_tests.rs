@@ -11,10 +11,11 @@ fn block_count_rule_is_enforced() {
 
     setup_evm(&mut working_set);
 
-    let l2_block_info = sc_info_helper();
+    let mut l2_block_info = sc_info_helper();
 
     // call end_l2_block_hook a couple times for da hash 0
-    for _ in 0..3 {
+    for i in 0..3 {
+        l2_block_info.set_time_stamp(10 + i);
         l2_block_rule_enforcer
             .end_l2_block_hook(&l2_block_info, &mut working_set)
             .unwrap();
@@ -32,6 +33,7 @@ fn block_count_rule_is_enforced() {
     add_another_l1_hash(&mut working_set);
 
     // call with a different da hash
+    l2_block_info.set_time_stamp(10 + 3);
     l2_block_rule_enforcer
         .end_l2_block_hook(&l2_block_info, &mut working_set)
         .unwrap();
