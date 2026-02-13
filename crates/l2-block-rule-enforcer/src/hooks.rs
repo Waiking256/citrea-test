@@ -104,7 +104,7 @@ impl<C: Context, Da: DaSpec> L2BlockRuleEnforcer<C, Da> {
     ) -> Result<(), L2BlockHookError> {
         let current_timestamp = l2_block.timestamp();
 
-        if current_timestamp < *last_timestamp {
+        if current_timestamp <= *last_timestamp {
             return Err(L2BlockHookError::TimestampShouldBeGreater);
         }
 

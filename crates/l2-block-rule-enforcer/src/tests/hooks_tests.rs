@@ -33,10 +33,11 @@ fn begin_l2_block_hook_checks_max_l2_blocks_per_l1() {
         .call(call_message, &context, &mut working_set)
         .unwrap();
 
-    let hook_l2_block_info = sc_info_helper();
+    let mut hook_l2_block_info = sc_info_helper();
 
     // call begin_slot_hook 11 times
     for i in 0..11 {
+        hook_l2_block_info.set_time_stamp(hook_l2_block_info.timestamp() + 1);
         if l2_block_rule_enforcer
             .end_l2_block_hook(&hook_l2_block_info, &mut working_set)
             .is_err()
